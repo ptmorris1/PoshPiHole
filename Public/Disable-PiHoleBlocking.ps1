@@ -31,50 +31,42 @@ function Disable-PiHoleBlocking {
         [int]$Timer = 0
     )
 
-    begin {
-        # Validate BaseUrl uses http
-        if (-not $BaseUrl.StartsWith('http://')) {
-            throw "Error: BaseUrl must use the 'http' scheme."
-        }
+    # Validate BaseUrl uses http
+    if (-not $BaseUrl.StartsWith('http://')) {
+        throw "Error: BaseUrl must use the 'http' scheme."
     }
 
-    process {
-        try {
-            # Authenticate and get session data
-            $sessionData = Connect-PiHole -BaseUrl $BaseUrl -Credential $Credential
+    try {
+        # Authenticate and get session data
+        $sessionData = Connect-PiHole -BaseUrl $BaseUrl -Credential $Credential
 
-            # Prepare API request to set blocking status
-            $url = "$BaseUrl/api/dns/blocking"
-            $headers = @{ 'X-FTL-SID' = $sessionData.SID }
+        # Prepare API request to set blocking status
+        $url = "$BaseUrl/api/dns/blocking"
+        $headers = @{ 'X-FTL-SID' = $sessionData.SID }
 
-            $body = @{
-                blocking = $false
-                timer    = if ($Timer -eq 0) { $null } else { $Timer }
-            } | ConvertTo-Json -Depth 1
+        $body = @{
+            blocking = $false
+            timer    = if ($Timer -eq 0) { $null } else { $Timer }
+        } | ConvertTo-Json -Depth 1
 
-            $invokeParams = @{
-                Uri         = $url
-                Method      = 'Post'
-                Headers     = $headers
-                Body        = $body
-                ContentType = 'application/json'
-                ErrorAction = 'Stop'
-            }
-            $response = Invoke-RestMethod @invokeParams
-
-            Write-Host "Blocking disabled successfully." -ForegroundColor Green
-            return $response
-        } catch {
-            Write-Host "Error: $_" -ForegroundColor Red
-            Disconnect-PiHole -BaseUrl $BaseUrl -Id $sessionData.SID -SID $sessionData.SID
-        } finally {
-            if ($sessionData) {
-                Disconnect-PiHole -BaseUrl $BaseUrl -Id $sessionData.ID -SID $sessionData.SID
-            }
+        $invokeParams = @{
+            Uri         = $url
+            Method      = 'Post'
+            Headers     = $headers
+            Body       = $body
+            ContentType = 'application/json'
+            ErrorAction = 'Stop'
         }
-    }
+        $response = Invoke-RestMethod @invokeParams
 
-    end {
-        # Nothing to clean up in the end block
+        Write-Host "Blocking disabled successfully." -ForegroundColor Green
+        return $response
+    } catch {
+        Write-Host "Error: $_" -ForegroundColor Red
+        Disconnect-PiHole -BaseUrl $BaseUrl -Id $sessionData.SID -SID $sessionData.SID
+    } finally {
+        if ($sessionData) {
+            Disconnect-PiHole -BaseUrl $BaseUrl -Id $sessionData.ID -SID $sessionData.SID
+        }
     }
 }

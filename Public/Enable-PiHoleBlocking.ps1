@@ -12,9 +12,15 @@ function Enable-PiHoleBlocking {
     .PARAMETER Credential
     A PSCredential object containing the Pi-hole password.
 
+    .PARAMETER Timer
+    Optional. Number of seconds until blocking mode is automatically changed back.
+
     .EXAMPLE
     $cred = Get-Credential
     Enable-PiHoleBlocking -BaseUrl 'http://pi.hole' -Credential $cred
+
+    .EXAMPLE
+    Enable-PiHoleBlocking -BaseUrl 'http://pi.hole' -Credential $cred -Timer 300
     #>
 
     param (
@@ -22,7 +28,10 @@ function Enable-PiHoleBlocking {
         [string]$BaseUrl,
 
         [Parameter(Mandatory = $true)]
-        [System.Management.Automation.PSCredential]$Credential
+        [System.Management.Automation.PSCredential]$Credential,
+
+        [Parameter(Mandatory = $false)]
+        [int]$Timer
     )
 
     begin {
@@ -38,10 +47,18 @@ function Enable-PiHoleBlocking {
             $sessionData = Connect-PiHole -BaseUrl $BaseUrl -Credential $Credential
 
             # Prepare API request to enable blocking
-            $url = "$BaseUrl/api/dns/blocking/enable"
-            $headers = @{ 'X-FTL-SID' = $sessionData.SID }
+            $url = "$BaseUrl/api/dns/blocking"
+            $headers = @{
+                'X-FTL-SID' = $sessionData.SID
+                'Content-Type' = 'application/json'
+            }
 
-            $response = Invoke-RestMethod -Uri $url -Method Get -Headers $headers -ErrorAction Stop
+            $body = @{
+                blocking = $true
+                timer = if ($PSBoundParameters.ContainsKey('Timer')) { $Timer } else { $null }
+            } | ConvertTo-Json
+
+            $response = Invoke-RestMethod -Uri $url -Method Post -Headers $headers -Body $body -ErrorAction Stop
 
             return $response
         }
