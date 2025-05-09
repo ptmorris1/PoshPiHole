@@ -1,20 +1,20 @@
-function Enable-PiHoleBlocking {
+function Get-PiHoleStats {
     <#
     .SYNOPSIS
-    Enables DNS blocking in Pi-hole.
+    Gets Pi-hole statistics summary.
 
     .DESCRIPTION
-    This function authenticates to the Pi-hole API using Connect-PiHole, enables DNS blocking, and then disconnects the session using Disconnect-PiHole.
+    This function retrieves current statistics from the Pi-hole API using the /stats/summary endpoint.
 
     .PARAMETER BaseUrl
     The base URL of the Pi-hole instance (e.g., http://pi.hole).
 
     .PARAMETER Credential
-    A PSCredential object containing the Pi-hole password.
+    A PSCredential object containing the Pi-hole password and any username. $creds = Get-Credential -UserName admin
 
     .EXAMPLE
-    $cred = Get-Credential
-    Enable-PiHoleBlocking -BaseUrl 'http://pi.hole' -Credential $cred
+    $creds = Get-Credential -UserName admin
+    Get-PiHoleStats -BaseUrl 'http://pi.hole' -Credential $creds
     #>
 
     param (
@@ -37,16 +37,22 @@ function Enable-PiHoleBlocking {
             # Authenticate and get session data
             $sessionData = Connect-PiHole -BaseUrl $BaseUrl -Credential $Credential
 
-            # Prepare API request to enable blocking
-            $url = "$BaseUrl/api/dns/blocking/enable"
+            # Prepare API request
+            $url = "$BaseUrl/api/stats/summary"
             $headers = @{ 'X-FTL-SID' = $sessionData.SID }
 
-            $response = Invoke-RestMethod -Uri $url -Method Get -Headers $headers -ErrorAction Stop
+            $invokeParams = @{
+                Uri         = $url
+                Method     = 'Get'
+                Headers    = $headers
+                ErrorAction = 'Stop'
+            }
+            $response = Invoke-RestMethod @invokeParams
 
             return $response
         }
         catch {
-            Write-Host "Error: $_" -ForegroundColor Red
+            Write-Error "Failed to retrieve Pi-hole stats: $_"
             if ($sessionData) {
                 Disconnect-PiHole -BaseUrl $BaseUrl -Id $sessionData.ID -SID $sessionData.SID
             }

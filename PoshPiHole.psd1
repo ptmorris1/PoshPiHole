@@ -1,5 +1,5 @@
 @{
-    ModuleVersion   = '0.1.0'
+    ModuleVersion   = '0.2.0'
     Guid            = '9fb0c9cf-ea85-4633-8915-c6d8a9379ab7'
     CompanyName     = 'Patrick Morris'
     Copyright       = '2025 Patrick Morris'
@@ -16,9 +16,16 @@
 ### PoshPiHole 0.1.0
 * Initial Release of PoshPiHole
   * PowerShell module for interacting with the Pi-hole v6 API!
-   * Get-PiHoleBlocking   get /auth/sessions
-   * Set-PiHoleBlocking   post /auth/sessions
+   * Get-PiHoleBlocking       get /auth/sessions
+   * Enable-PiHoleBlocking    post /auth/sessions
+   * Disable-PiHoleBlocking   post /auth/sessions
+   * Get-PiHoleHistory        get /history
+   * Get-PiHoleSummary        get /stats/database/summary
 ---
+### PoshPiHole 0.2.0
+* Initial Release of PoshPiHole
+  * Get-PiHoleDomain          get /domains
+  * Get-PiHoleStats           get /stats/summary
 '@
         }
     }

@@ -28,35 +28,47 @@ function Get-PiHoleBlocking {
         [System.Management.Automation.PSCredential]$Credential
     )
 
-    # Validate BaseUrl uses http
-    if (-not $BaseUrl.StartsWith('http://')) {
-        throw "Error: BaseUrl must use the 'http' scheme."
+    begin {
+        # Validate BaseUrl uses http
+        if (-not $BaseUrl.StartsWith('http://')) {
+            throw "Error: BaseUrl must use the 'http' scheme."
+        }
     }
 
-    try {
-        # Authenticate and get session data
-        $sessionData = Connect-PiHole -BaseUrl $BaseUrl -Credential $Credential
+    process {
+        try {
+            # Authenticate and get session data
+            $sessionData = Connect-PiHole -BaseUrl $BaseUrl -Credential $Credential
 
-        # Prepare API request to get blocking status
-        $url = "$BaseUrl/api/dns/blocking"
-        $headers = @{ 'X-FTL-SID' = $sessionData.SID }
+            # Prepare API request to get blocking status
+            $url = "$BaseUrl/api/dns/blocking"
+            $headers = @{ 'X-FTL-SID' = $sessionData.SID }
 
-        $response = Invoke-RestMethod -Uri $url -Method Get -Headers $headers -ErrorAction Stop
+            $response = Invoke-RestMethod -Uri $url -Method Get -Headers $headers -ErrorAction Stop
 
-        # Process and return the response
-        $blockingStatus = [PSCustomObject]@{
-            BlockingStatus = $response.blocking
-            Timer          = $response.timer
-            Took           = $response.took
+            # Process and return the response
+            $blockingStatus = [PSCustomObject]@{
+                BlockingStatus = $response.blocking
+                Timer          = $response.timer
+                Took           = $response.took
+            }
+
+            return $blockingStatus
         }
-
-        return $blockingStatus
-    } catch {
-        Write-Host "Error: $_" -ForegroundColor Red
-    } finally {
-        # Only try to disconnect if we have session data
-        if ($sessionData) {
-            Disconnect-PiHole -BaseUrl $BaseUrl -Id $sessionData.ID -SID $sessionData.SID
+        catch {
+            Write-Host "Error: $_" -ForegroundColor Red
+            if ($sessionData) {
+                Disconnect-PiHole -BaseUrl $BaseUrl -Id $sessionData.ID -SID $sessionData.SID
+            }
         }
+        finally {
+            if ($sessionData) {
+                Disconnect-PiHole -BaseUrl $BaseUrl -Id $sessionData.ID -SID $sessionData.SID
+            }
+        }
+    }
+
+    end {
+        # Nothing to clean up in the end block
     }
 }

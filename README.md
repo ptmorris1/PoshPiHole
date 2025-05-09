@@ -90,3 +90,27 @@ Get-PiHoleSummary -BaseUrl 'http://pi.hole' -Credential $creds -From (Get-Date).
 # Get summary for specific dates
 Get-PiHoleSummary -BaseUrl 'http://pi.hole' -Credential $creds -From "2023-01-01" -Until "2023-01-02"
 ```
+
+### Get-PiHoleStats
+Gets current statistics summary from Pi-hole.
+
+Parameters:
+- BaseUrl: The base URL of the Pi-hole instance (e.g., http://pi.hole)
+- Credential: A PSCredential object containing the Pi-hole password
+
+```powershell
+$creds = Get-Credential -UserName admin
+Get-PiHoleStats -BaseUrl 'http://pi.hole' -Credential $creds
+```
+
+### Get-PiHoleDomain
+Retrieves the domains from the Pi-hole.
+
+Parameters:
+- BaseUrl: The base URL of the Pi-hole instance (e.g., http://pi.hole)
+- Credential: A PSCredential object containing the Pi-hole password
+
+```powershell
+$creds = Get-Credential -UserName admin
+Get-PiHoleDomain -BaseUrl 'http://pi.hole' -Credential $creds
+```

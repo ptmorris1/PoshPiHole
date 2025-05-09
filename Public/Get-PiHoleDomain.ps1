@@ -1,10 +1,10 @@
-function Enable-PiHoleBlocking {
+function Get-PiHoleDomain {
     <#
     .SYNOPSIS
-    Enables DNS blocking in Pi-hole.
+    Retrieves the domains from the Pi-hole API.
 
     .DESCRIPTION
-    This function authenticates to the Pi-hole API using Connect-PiHole, enables DNS blocking, and then disconnects the session using Disconnect-PiHole.
+    This function authenticates to the Pi-hole API using Connect-PiHole, retrieves the domains, and then disconnects the session using Disconnect-PiHole.
 
     .PARAMETER BaseUrl
     The base URL of the Pi-hole instance (e.g., http://pi.hole).
@@ -12,9 +12,12 @@ function Enable-PiHoleBlocking {
     .PARAMETER Credential
     A PSCredential object containing the Pi-hole password.
 
+    .OUTPUTS
+    A PSCustomObject containing the domains data.
+
     .EXAMPLE
     $cred = Get-Credential
-    Enable-PiHoleBlocking -BaseUrl 'http://pi.hole' -Credential $cred
+    Get-PiHoleDomain -BaseUrl 'http://pi.hole' -Credential $cred
     #>
 
     param (
@@ -37,8 +40,8 @@ function Enable-PiHoleBlocking {
             # Authenticate and get session data
             $sessionData = Connect-PiHole -BaseUrl $BaseUrl -Credential $Credential
 
-            # Prepare API request to enable blocking
-            $url = "$BaseUrl/api/dns/blocking/enable"
+            # Prepare API request to get domains
+            $url = "$BaseUrl/api/domains"
             $headers = @{ 'X-FTL-SID' = $sessionData.SID }
 
             $response = Invoke-RestMethod -Uri $url -Method Get -Headers $headers -ErrorAction Stop
