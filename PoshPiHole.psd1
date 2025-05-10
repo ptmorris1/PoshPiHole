@@ -1,5 +1,5 @@
 @{
-    ModuleVersion   = '0.2.1'
+    ModuleVersion   = '0.2.2'
     Guid            = '9fb0c9cf-ea85-4633-8915-c6d8a9379ab7'
     CompanyName     = 'Patrick Morris'
     Copyright       = '2025 Patrick Morris'
@@ -23,13 +23,14 @@
    * Get-PiHoleSummary        get /stats/database/summary
 ---
 ### PoshPiHole 0.2.0
-* Initial Release of PoshPiHole
   * Get-PiHoleDomain          get /domains
   * Get-PiHoleStats           get /stats/summary
 ---
 ### PoshPiHole 0.2.1
-* Initial Release of PoshPiHole
   * Fixed Enable and Disable-PiHoleBlocking
+---
+### PoshPiHole 0.2.2
+  * Disable-PiHoleBlocking will now delete multiple ID
 ---
 '@
         }

@@ -1,116 +1,216 @@
 # PoshPiHole
-PowerShell module to interact with the Pi-Hole v6 API
 
-## Description
-PoshPiHole provides PowerShell functions to interact with your Pi-hole server, allowing you to manage blocking, view statistics, and analyze query history programmatically.
+[![PowerShell Gallery](https://img.shields.io/powershellgallery/v/PoshPiHole.svg)](https://www.powershellgallery.com/packages/PoshPiHole)
+[![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
+[![Build Status](https://img.shields.io/badge/build-passing-brightgreen.svg)]()
 
-## Requirements
-- PowerShell 7
-- Pi-hole v6 or higher
-- Network access to your Pi-hole server
-- HTTP URL required (https not supported)
+PowerShell module to interact with the [Pi-hole v6 API](https://docs.pi-hole.net/api/)
 
-## Installation
+---
+
+## 📖 Table of Contents
+
+- [PoshPiHole](#poshpihole)
+  - [📖 Table of Contents](#-table-of-contents)
+  - [🦾 Description](#-description)
+  - [🛠 Requirements](#-requirements)
+  - [📦 Installation](#-installation)
+  - [🔐 Authentication](#-authentication)
+  - [📚 Available Functions](#-available-functions)
+    - [🔻 Disable-PiHoleBlocking](#-disable-piholeblocking)
+    - [🔼 Enable-PiHoleBlocking](#-enable-piholeblocking)
+    - [📶 Get-PiHoleBlocking](#-get-piholeblocking)
+    - [🦾 Get-PiHoleHistory](#-get-piholehistory)
+    - [🗂 Get-PiHoleSummary](#-get-piholesummary)
+    - [📊 Get-PiHoleStats](#-get-piholestats)
+    - [🌐 Get-PiHoleDomain](#-get-piholedomain)
+  - [📣 Contributions \& Issues](#-contributions--issues)
+  - [📄 License](#-license)
+  - [📅 Changelog](#-changelog)
+
+---
+
+## 🦾 Description
+
+**PoshPiHole** is a PowerShell module that enables you to interact with your Pi-hole server programmatically.
+It provides functions to:
+
+* Manage DNS blocking
+* Retrieve real-time and historical statistics
+* Query domain history
+* Access database summaries
+* And more!
+
+---
+
+## 🛠 Requirements
+
+* PowerShell 7 or higher
+* Pi-hole v6+
+* HTTP access to your Pi-hole server
+
+  > ⚠️ HTTPS is **not supported**
+
+---
+
+## 📦 Installation
+
+Install from the PowerShell Gallery:
+
 ```powershell
-# Install from PowerShell Gallery
 Install-Module -Name PoshPiHole -Scope CurrentUser
 ```
 
-## Authentication
-All functions require a PSCredential object. The username can be anything, but the password must match your Pi-hole password:
+---
+
+## 🔐 Authentication
+
+All functions require a `PSCredential` object.
+The **username can be anything**, but the password must match your Pi-hole password.
+
 ```powershell
 $creds = Get-Credential -UserName admin
 ```
 
-## Functions
+---
 
-### Disable-PiHoleBlocking
-Disables Pi-hole DNS blocking functionality with an optional timer.
+## 📚 Available Functions
 
-Parameters:
-- BaseUrl: The base URL of the Pi-hole instance (e.g., http://pi.hole)
-- Credential: A PSCredential object containing the Pi-hole password
-- Timer: Optional integer value for the timer in seconds. No value sets timer to indefinite.
+### 🔻 Disable-PiHoleBlocking
+
+Temporarily or permanently disables DNS blocking on your Pi-hole.
+
+**Parameters:**
+
+* `BaseUrl` – Base URL of the Pi-hole instance (e.g., `http://pi.hole`)
+* `Credential` – PSCredential object
+* `Timer` – (Optional) Duration to disable blocking (in seconds)
 
 ```powershell
-$cred = Get-Credential -UserName admin
-Disable-PiHoleBlocking -BaseUrl 'http://pi.hole' -Credential $cred -Timer 15
+# Disabled blocking for 15 seconds
+Disable-PiHoleBlocking -BaseUrl 'http://pi.hole' -Credential $creds -Timer 15
+
+# Disables blocking until re-enabled again.
+Disable-PiHoleBlocking -BaseUrl 'http://pi.hole' -Credential $creds
 ```
 
-### Enable-PiHoleBlocking
-Enables Pi-hole DNS blocking functionality.
+---
 
-Parameters:
-- BaseUrl: The base URL of the Pi-hole instance (e.g., http://pi.hole)
-- Credential: A PSCredential object containing the Pi-hole password
+### 🔼 Enable-PiHoleBlocking
+
+Re-enables DNS blocking on your Pi-hole.
+
+**Parameters:**
+
+* `BaseUrl` – Base URL of the Pi-hole instance
+* `Credential` – PSCredential object
 
 ```powershell
-$creds = Get-Credential -UserName admin
 Enable-PiHoleBlocking -BaseUrl 'http://pi.hole' -Credential $creds
 ```
 
-### Get-PiHoleBlocking
-Retrieves the current blocking status from Pi-hole.
+---
 
-Parameters:
-- BaseUrl: The base URL of the Pi-hole instance
-- Credential: A PSCredential object containing the Pi-hole password
+### 📶 Get-PiHoleBlocking
 
-Returns a PSCustomObject containing:
-- BlockingStatus
-- Timer
-- Processing time
+Retrieves current blocking status and related metadata.
 
-### Get-PiHoleHistory
-Gets query history from Pi-hole including timestamps and query types.
+**Returns:**
+A `PSCustomObject` with:
 
-Parameters:
-- BaseUrl: The base URL of the Pi-hole instance
-- Credential: A PSCredential object containing the Pi-hole password
+* `BlockingStatus`
+* `Timer`
+* `ProcessingTime`
+
+**Parameters:**
+
+* `BaseUrl` – Base URL of the Pi-hole instance
+* `Credential` – PSCredential object
+
+---
+
+### 🦾 Get-PiHoleHistory
+
+Fetches DNS query history including timestamps and types.
+
+**Parameters:**
+
+* `BaseUrl` – Base URL of the Pi-hole instance
+* `Credential` – PSCredential object
 
 ```powershell
-$creds = Get-Credential -UserName admin
 Get-PiHoleHistory -BaseUrl 'http://pi.hole' -Credential $creds
 ```
 
-### Get-PiHoleSummary
-Gets database content summary from Pi-hole.
+---
 
-Parameters:
-- BaseUrl: The base URL of the Pi-hole instance
-- Credential: A PSCredential object containing the Pi-hole password
-- From: Start date/time (accepts any format that Get-Date supports)
-- Until: End date/time (accepts any format that Get-Date supports)
+### 🗂 Get-PiHoleSummary
+
+Retrieves a summary of DNS queries from the database within a specified time range.
+
+**Parameters:**
+
+* `BaseUrl` – Base URL of the Pi-hole instance
+* `Credential` – PSCredential object
+* `From` – Start time/date (any format accepted by `Get-Date`)
+* `Until` – End time/date
 
 ```powershell
-$creds = Get-Credential -UserName admin
-# Get summary for last 24 hours
-Get-PiHoleSummary -BaseUrl 'http://pi.hole' -Credential $creds -From (Get-Date).AddDays(-1) -Until (Get-Date)
+# Summary for last 24 hours
+Get-PiHoleSummary -BaseUrl 'http://pi.hole' -Credential $creds `
+  -From (Get-Date).AddDays(-1) -Until (Get-Date)
 
-# Get summary for specific dates
-Get-PiHoleSummary -BaseUrl 'http://pi.hole' -Credential $creds -From "2023-01-01" -Until "2023-01-02"
+# Summary for specific date range
+Get-PiHoleSummary -BaseUrl 'http://pi.hole' -Credential $creds `
+  -From '2025-01-01' -Until '2025-01-03'
 ```
 
-### Get-PiHoleStats
-Gets current statistics summary from Pi-hole.
+---
 
-Parameters:
-- BaseUrl: The base URL of the Pi-hole instance (e.g., http://pi.hole)
-- Credential: A PSCredential object containing the Pi-hole password
+### 📊 Get-PiHoleStats
+
+Retrieves current usage and performance statistics.
+
+**Parameters:**
+
+* `BaseUrl` – Base URL of the Pi-hole instance
+* `Credential` – PSCredential object
 
 ```powershell
-$creds = Get-Credential -UserName admin
 Get-PiHoleStats -BaseUrl 'http://pi.hole' -Credential $creds
 ```
 
-### Get-PiHoleDomain
-Retrieves the domains from the Pi-hole.
+---
 
-Parameters:
-- BaseUrl: The base URL of the Pi-hole instance (e.g., http://pi.hole)
-- Credential: A PSCredential object containing the Pi-hole password
+### 🌐 Get-PiHoleDomain
+
+Fetches domain lists from the Pi-hole database.
+
+**Parameters:**
+
+* `BaseUrl` – Base URL of the Pi-hole instance
+* `Credential` – PSCredential object
 
 ```powershell
-$creds = Get-Credential -UserName admin
 Get-PiHoleDomain -BaseUrl 'http://pi.hole' -Credential $creds
 ```
+
+---
+
+## 📣 Contributions & Issues
+
+Feel free to open issues, submit pull requests, or suggest features!
+
+---
+
+## 📄 License
+
+This project is licensed under the MIT License.
+
+---
+
+## 📅 Changelog
+
+See [CHANGELOG.md](CHANGELOG.md) for a history of changes and release notes.
+
+---
