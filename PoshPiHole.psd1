@@ -30,7 +30,7 @@
   * Fixed Enable and Disable-PiHoleBlocking
 ---
 ### PoshPiHole 0.2.2
-  * Disable-PiHoleBlocking will now delete multiple ID
+  * Disconnect-PiHole will now delete multiple ID
 ---
 '@
         }

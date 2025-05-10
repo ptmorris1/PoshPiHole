@@ -8,7 +8,7 @@ All notable changes to the **PoshPiHole** module will be documented in this file
 
 ### Fixed
 
-* `Disable-PiHoleBlocking` will now delete multiple IDs as expected.
+* `Disconnect-PiHole` will now delete multiple IDs as expected.
 
 ---
 
