@@ -1,7 +1,7 @@
 # PoshPiHole
 
 [![PowerShell Gallery](https://img.shields.io/powershellgallery/v/PoshPiHole.svg)](https://www.powershellgallery.com/packages/PoshPiHole)
-[![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
+[![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
 [![Build Status](https://img.shields.io/badge/build-passing-brightgreen.svg)]()
 
 PowerShell module to interact with the [Pi-hole v6 API](https://docs.pi-hole.net/api/)
@@ -24,6 +24,8 @@ PowerShell module to interact with the [Pi-hole v6 API](https://docs.pi-hole.net
     - [🗂 Get-PiHoleSummary](#-get-piholesummary)
     - [📊 Get-PiHoleStats](#-get-piholestats)
     - [🌐 Get-PiHoleDomain](#-get-piholedomain)
+    - [🖥 Get-PiHoleSystemInfo](#-get-piholesysteminfo)
+    - [🧩 Get-PiHoleVersion](#-get-piholeversion)
   - [📣 Contributions \& Issues](#-contributions--issues)
   - [📄 License](#-license)
   - [📅 Changelog](#-changelog)
@@ -193,6 +195,68 @@ Fetches domain lists from the Pi-hole database.
 
 ```powershell
 Get-PiHoleDomain -BaseUrl 'http://pi.hole' -Credential $creds
+```
+
+---
+
+### 🖥 Get-PiHoleSystemInfo
+
+Retrieves detailed system information from the Pi-hole server, including uptime, memory, CPU, and process statistics.
+
+**Returns:**
+A `PSCustomObject` with the following structure:
+
+- `system` (object)
+  - `uptime` (integer): System uptime in seconds
+  - `memory` (object)
+    - `ram` (object)
+      - `total`, `free`, `used`, `available` (integer): RAM stats in KB
+      - `%used` (number): Used RAM in percent
+    - `swap` (object)
+      - `total`, `used`, `free` (integer): Swap stats in KB
+      - `%used` (number): Used swap in percent
+  - `procs` (integer): Number of processes
+  - `cpu` (object)
+    - `nprocs` (integer): Number of processors
+    - `%cpu` (number): Total CPU usage in percent
+    - `load` (object)
+      - `raw` (array): 1, 5, 15 minute load averages (raw)
+      - `percent` (array): 1, 5, 15 minute load averages (percent)
+- `took` (number): Time in seconds to process the request
+
+**Parameters:**
+
+* `BaseUrl` – Base URL of the Pi-hole instance (e.g., `http://pi.hole`)
+* `Credential` – PSCredential object
+
+```powershell
+$creds = Get-Credential -UserName admin
+Get-PiHoleSystemInfo -BaseUrl 'http://pi.hole' -Credential $creds
+```
+
+---
+
+### 🧩 Get-PiHoleVersion
+
+Retrieves version information for the Pi-hole server and its components.
+
+**Returns:**
+A `PSCustomObject` with the following structure:
+
+- `core` (string): Pi-hole core version
+- `web` (string): Web interface version
+- `ftl` (string): FTL engine version
+- `api` (string): API version
+- `took` (number): Time in seconds to process the request
+
+**Parameters:**
+
+* `BaseUrl` – Base URL of the Pi-hole instance (e.g., `http://pi.hole`)
+* `Credential` – PSCredential object
+
+```powershell
+$creds = Get-Credential -UserName admin
+Get-PiHoleVersion -BaseUrl 'http://pi.hole' -Credential $creds
 ```
 
 ---

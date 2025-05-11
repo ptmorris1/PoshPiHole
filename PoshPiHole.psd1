@@ -1,5 +1,5 @@
 @{
-    ModuleVersion   = '0.2.2'
+    ModuleVersion   = '0.3.0'
     Guid            = '9fb0c9cf-ea85-4633-8915-c6d8a9379ab7'
     CompanyName     = 'Patrick Morris'
     Copyright       = '2025 Patrick Morris'
@@ -13,25 +13,66 @@
             ProjectURI   = 'https://github.com/ptmorris1/PoshPiHole'
             LicenseURI   = 'https://github.com/ptmorris1/PoshPiHole/blob/main/LICENSE'
             ReleaseNotes = @'
-### PoshPiHole 0.1.0
-* Initial Release of PoshPiHole
-  * PowerShell module for interacting with the Pi-hole v6 API!
-   * Get-PiHoleBlocking       get /auth/sessions
-   * Enable-PiHoleBlocking    post /auth/sessions
-   * Disable-PiHoleBlocking   post /auth/sessions
-   * Get-PiHoleHistory        get /history
-   * Get-PiHoleSummary        get /stats/database/summary
+# 📅 Changelog
+
+All notable changes to the **PoshPiHole** module will be documented in this file.
+
 ---
-### PoshPiHole 0.2.0
-  * Get-PiHoleDomain          get /domains
-  * Get-PiHoleStats           get /stats/summary
+
+## [0.3.0] - 2025-05-11
+
+### Added
+
+* `Get-PiHoleSystemInfo` – Retrieves detailed system information from Pi-hole (`GET /info/system`).
+* `Get-PiHoleVersion` – Retrieves version information for Pi-hole and its components (`GET /info/version`).
+
+### Fixed
+
+* `Disconnect-PiHole` will now delete multiple IDs as expected.
+
 ---
-### PoshPiHole 0.2.1
-  * Fixed Enable and Disable-PiHoleBlocking
+
+## [0.2.2] - 2025-05-10
+
+### Fixed
+
+* `Disconnect-PiHole` will now delete multiple IDs as expected.
+
 ---
-### PoshPiHole 0.2.2
-  * Disconnect-PiHole will now delete multiple ID
+
+## [0.2.1] - 2025-04-30
+
+### Fixed
+
+* Resolved issues with `Enable-PiHoleBlocking` and `Disable-PiHoleBlocking` not properly managing sessions.
+
 ---
+
+## [0.2.0] - 2025-04-10
+
+### Added
+
+* `Get-PiHoleStats` – Retrieves current Pi-hole usage and performance statistics (`GET /stats/summary`)
+* `Get-PiHoleDomain` – Fetches domain lists from Pi-hole (`GET /domains`)
+
+---
+
+## [0.1.0] - 2025-04-01
+
+### Initial Release
+
+* Base module functionality for interacting with the Pi-hole v6 API.
+* Implemented the following functions:
+
+  * `Get-PiHoleBlocking` (`GET /auth/sessions`)
+  * `Enable-PiHoleBlocking` (`POST /auth/sessions`)
+  * `Disable-PiHoleBlocking` (`POST /auth/sessions`)
+  * `Get-PiHoleHistory` (`GET /history`)
+  * `Get-PiHoleSummary` (`GET /stats/database/summary`)
+
+---
+
+> 📌 This changelog follows [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) principles.
 '@
         }
     }

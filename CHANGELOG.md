@@ -4,7 +4,12 @@ All notable changes to the **PoshPiHole** module will be documented in this file
 
 ---
 
-## \[0.2.2] - 2025-05-10
+## [0.3.0] - 2025-05-11
+
+### Added
+
+* `Get-PiHoleSystemInfo` – Retrieves detailed system information from Pi-hole (`GET /info/system`).
+* `Get-PiHoleVersion` – Retrieves version information for Pi-hole and its components (`GET /info/version`).
 
 ### Fixed
 
@@ -12,7 +17,15 @@ All notable changes to the **PoshPiHole** module will be documented in this file
 
 ---
 
-## \[0.2.1] - 2025-04-30
+## [0.2.2] - 2025-05-10
+
+### Fixed
+
+* `Disconnect-PiHole` will now delete multiple IDs as expected.
+
+---
+
+## [0.2.1] - 2025-04-30
 
 ### Fixed
 
@@ -20,7 +33,7 @@ All notable changes to the **PoshPiHole** module will be documented in this file
 
 ---
 
-## \[0.2.0] - 2025-04-10
+## [0.2.0] - 2025-04-10
 
 ### Added
 
@@ -29,7 +42,7 @@ All notable changes to the **PoshPiHole** module will be documented in this file
 
 ---
 
-## \[0.1.0] - 2025-04-01
+## [0.1.0] - 2025-04-01
 
 ### Initial Release
 
