@@ -265,25 +265,25 @@ Get-PiHoleVersion -BaseUrl 'http://pi.hole' -Credential $creds
 | Authentication       | DELETE | /auth/session/{id}                |                       | Delete session by ID                             |
 | Authentication       | GET    | /auth/sessions                    |                       | List of all current sessions                     |
 | Authentication       | GET    | /auth/totp                        |                       | Suggest new TOTP credentials                     |
-| Metrics              | GET    | /history                          | Get-PiHoleHistory     | Get activity graph data                          |
+| Metrics              | GET    | /history                          | [Get-PiHoleHistory](#-get-piholehistory)     | Get activity graph data                          |
 | Metrics              | GET    | /history/clients                  |                       | Get per-client activity graph data               |
 | Metrics              | GET    | /history/database                  |                       | Get activity graph data (long-term data)         |
 | Metrics              | GET    | /history/database/clients         |                       | Get per-client activity graph data (long-term)   |
 | Metrics              | GET    | /queries                          |                       | Get queries                                     |
 | Metrics              | GET    | /queries/suggestions              |                       | Get query filter suggestions                     |
 | Metrics              | GET    | /stats/database/query_types       |                       | Get query types (long-term database)             |
-| Metrics              | GET    | /stats/database/summary           | Get-PiHoleSummary     | Get database content details                     |
+| Metrics              | GET    | /stats/database/summary           | [Get-PiHoleSummary](#-get-piholesummary)     | Get database content details                     |
 | Metrics              | GET    | /stats/database/top_clients       |                       | Get top clients (long-term database)             |
 | Metrics              | GET    | /stats/database/top_domains       |                       | Get top domains (long-term database)             |
 | Metrics              | GET    | /stats/database/upstreams         |                       | Get metrics about upstreams (long-term database) |
 | Metrics              | GET    | /stats/query_types                |                       | Get query types                                  |
 | Metrics              | GET    | /stats/recent_blocked             |                       | Get most recently blocked domain                 |
-| Metrics              | GET    | /stats/summary                    | Get-PiHoleStats       | Get overview of Pi-hole activity                 |
+| Metrics              | GET    | /stats/summary                    | [Get-PiHoleStats](#-get-piholestats)       | Get overview of Pi-hole activity                 |
 | Metrics              | GET    | /stats/top_clients                |                       | Get top clients                                  |
 | Metrics              | GET    | /stats/top_domains                |                       | Get top domains                                  |
 | Metrics              | GET    | /stats/upstreams                  |                       | Get metrics about upstreams                      |
-| DNS control          | GET    | /dns/blocking                     | Enable-PiHoleBlocking  | Get current blocking status                      |
-| DNS control          | POST   | /dns/blocking                     | Enable/Disable-PiHoleBlocking | Change current blocking status           |
+| DNS control          | GET    | /dns/blocking                     | [Get-PiHoleBlocking](#-get-piholeblocking)  | Get current blocking status                      |
+| DNS control          | POST   | /dns/blocking                     | [Enable-PiHoleBlocking](#-enable-piholeblocking);[Disable-PiHoleBlocking](#-disable-piholeblocking) | Change current blocking status           |
 | Group management     | POST   | /groups                           |                       | Add new group                                    |
 | Group management     | POST   | /groups:batchDelete               |                       | Delete multiple groups                           |
 | Group management     | GET    | /groups/{name}                    |                       | Get groups                                       |
@@ -291,7 +291,7 @@ Get-PiHoleVersion -BaseUrl 'http://pi.hole' -Credential $creds
 | Group management     | DELETE | /groups/{name}                    |                       | Delete group                                     |
 | Domain management    | POST   | /domains:batchDelete              |                       | Delete multiple domains                          |
 | Domain management    | POST   | /domains/{type}/{kind}            |                       | Add new domain                                   |
-| Domain management    | GET    | /domains/{type}/{kind}/{domain}   | Get-PiHoleDomain      | Get domain                                       |
+| Domain management    | GET    | /domains/{type}/{kind}/{domain}   | [Get-PiHoleDomain](#-get-piholedomain)      | Get domain                                       |
 | Domain management    | PUT    | /domains/{type}/{kind}/{domain}   |                       | Replace domain                                   |
 | Domain management    | DELETE | /domains/{type}/{kind}/{domain}   |                       | Delete domain                                    |
 | Client management    | POST   | /clients                          |                       | Add new client                                   |
@@ -317,8 +317,8 @@ Get-PiHoleVersion -BaseUrl 'http://pi.hole' -Credential $creds
 | FTL information      | GET    | /info/messages/count              |                       | Get count of Pi-hole diagnosis messages          |
 | FTL information      | GET    | /info/metrics                     |                       | Get metrics info                                 |
 | FTL information      | GET    | /info/sensors                     |                       | Get info about various sensors                   |
-| FTL information      | GET    | /info/system                      | Get-PiHoleSystemInfo  | Get info about various system parameters         |
-| FTL information      | GET    | /info/version                     | Get-PiHoleVersion     | Get Pi-hole version                              |
+| FTL information      | GET    | /info/system                      | [Get-PiHoleSystemInfo](#-get-piholesysteminfo)  | Get info about various system parameters         |
+| FTL information      | GET    | /info/version                     | [Get-PiHoleVersion](#-get-piholeversion)     | Get Pi-hole version                              |
 | FTL information      | GET    | /logs/dnsmasq                     |                       | Get DNS log content                              |
 | FTL information      | GET    | /logs/ftl                         |                       | Get DNS log content                              |
 | FTL information      | GET    | /logs/webserver                   |                       | Get DNS log content                              |
