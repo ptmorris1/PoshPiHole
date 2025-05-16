@@ -1,6 +1,8 @@
 # PoshPiHole
 
 [![PowerShell Gallery](https://img.shields.io/powershellgallery/v/PoshPiHole.svg)](https://www.powershellgallery.com/packages/PoshPiHole)
+![Downloads](https://img.shields.io/powershellgallery/dt/PoshPiHole)
+![PSGallery Quality](https://img.shields.io/powershellgallery/p/PoshPiHole)
 [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
 [![Build Status](https://img.shields.io/badge/build-passing-brightgreen.svg)]()
 
@@ -8,10 +10,9 @@ PowerShell module to interact with the [Pi-hole v6 API](https://docs.pi-hole.net
 
 ---
 
-## 📖 Table of Contents
+## 📖 Table of Contents <!-- omit in toc -->
 
 - [PoshPiHole](#poshpihole)
-  - [📖 Table of Contents](#-table-of-contents)
   - [🦾 Description](#-description)
   - [🛠 Requirements](#-requirements)
   - [📦 Installation](#-installation)
