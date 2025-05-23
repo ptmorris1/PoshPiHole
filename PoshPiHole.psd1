@@ -1,5 +1,5 @@
 @{
-    ModuleVersion   = '0.3.0'
+    ModuleVersion   = '0.4.0'
     Guid            = '9fb0c9cf-ea85-4633-8915-c6d8a9379ab7'
     CompanyName     = 'Patrick Morris'
     Copyright       = '2025 Patrick Morris'
@@ -16,6 +16,15 @@
 # 📅 Changelog
 
 All notable changes to the **PoshPiHole** module will be documented in this file.
+
+---
+
+## [0.4.0] - 2025-05-23
+
+### Added
+
+* `Get-PiHoleSessions` – Retrieves the current Pi-hole sessions (`GET /auth/sessions`).
+* `Get-PiHoleClientHistory` – Retrieves per-client activity graph data (`GET /history/clients`).
 
 ---
 

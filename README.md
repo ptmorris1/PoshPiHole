@@ -18,7 +18,7 @@ PowerShell module to interact with the [Pi-hole v6 API](https://docs.pi-hole.net
   - [📦 Installation](#-installation)
   - [🔐 Authentication](#-authentication)
   - [📚 Available Functions](#-available-functions)
-  - [📑 Pi-hole API Endpoint Reference](#-pi-hole-api-endpoint-reference)
+  - [� Pi-hole API Endpoint Reference](#-pi-hole-api-endpoint-reference)
   - [📣 Contributions \& Issues](#-contributions--issues)
   - [📄 License](#-license)
   - [📅 Changelog](#-changelog)
@@ -254,6 +254,39 @@ Get-PiHoleVersion -BaseUrl 'http://pi.hole' -Credential $creds
 
 ---
 
+### 🖥 Get-PiHoleSessions <!-- omit in toc -->
+
+Retrieves the current Pi-hole sessions from the API.
+
+**Parameters:**
+
+* `BaseUrl` – Base URL of the Pi-hole instance (e.g., `http://pi.hole`)
+* `Credential` – PSCredential object
+
+```powershell
+$creds = Get-Credential -UserName admin
+Get-PiHoleSessions -BaseUrl 'http://pi.hole' -Credential $creds
+```
+
+---
+
+### 📈 Get-PiHoleClientHistory <!-- omit in toc -->
+
+Retrieves per-client activity graph data from the Pi-hole API for the last 24 hours.
+
+**Parameters:**
+
+* `BaseUrl` – Base URL of the Pi-hole instance (e.g., `http://pi.hole`)
+* `Credential` – PSCredential object
+* `ClientsReturned` – (Optional) Maximum number of clients to return. Default is 0 (all clients).
+
+```powershell
+$creds = Get-Credential -UserName admin
+Get-PiHoleClientHistory -BaseUrl 'http://pi.hole' -Credential $creds -ClientsReturned 10
+```
+
+---
+
 ## 📑 Pi-hole API Endpoint Reference
 
 | Category             | Method | Endpoint                          | Function              | Description                                      |
@@ -263,10 +296,10 @@ Get-PiHoleVersion -BaseUrl 'http://pi.hole' -Credential $creds
 | Authentication       | DELETE | /auth                             |                       | Delete session                                   |
 | Authentication       | GET    | /auth/app                         |                       | Create new application password                  |
 | Authentication       | DELETE | /auth/session/{id}                |                       | Delete session by ID                             |
-| Authentication       | GET    | /auth/sessions                    |                       | List of all current sessions                     |
+| Authentication       | GET    | /auth/sessions                    | [Get-PiHoleSessions](#-get-piholesessions)     | List of all current sessions                     |
 | Authentication       | GET    | /auth/totp                        |                       | Suggest new TOTP credentials                     |
 | Metrics              | GET    | /history                          | [Get-PiHoleHistory](#-get-piholehistory)     | Get activity graph data                          |
-| Metrics              | GET    | /history/clients                  |                       | Get per-client activity graph data               |
+| Metrics              | GET    | /history/clients                  | [Get-PiHoleClientHistory](#-get-piholeclienthistory) | Get per-client activity graph data               |
 | Metrics              | GET    | /history/database                  |                       | Get activity graph data (long-term data)         |
 | Metrics              | GET    | /history/database/clients         |                       | Get per-client activity graph data (long-term)   |
 | Metrics              | GET    | /queries                          |                       | Get queries                                     |
