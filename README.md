@@ -17,7 +17,7 @@ PowerShell module to interact with the [Pi-hole v6 API](https://docs.pi-hole.net
   - [🛠 Requirements](#-requirements)
   - [📦 Installation](#-installation)
   - [🔐 Authentication](#-authentication)
-  - [📑 See Get-Help `cmdlet name here`  for details on each cmdlet.](#-see-get-help-cmdlet-name-here--for-details-on-each-cmdlet)
+  - [📑 Help!](#-help)
   - [📑 Pi-hole API Endpoint Reference](#-pi-hole-api-endpoint-reference)
   - [📣 Contributions \& Issues](#-contributions--issues)
   - [📄 License](#-license)
@@ -69,7 +69,11 @@ $creds = Get-Credential -UserName admin
 
 ---
 
-## 📑 See Get-Help `cmdlet name here`  for details on each cmdlet.
+## 📑 Help!
+> Use Get-Help for details on each cmdlet.
+> ```powershell
+>Help Get-PiHoleStats
+>```
 
 ## 📑 Pi-hole API Endpoint Reference
 
