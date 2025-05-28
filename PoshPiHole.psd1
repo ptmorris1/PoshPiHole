@@ -1,5 +1,5 @@
 @{
-    ModuleVersion   = '0.4.0'
+    ModuleVersion   = '0.5.0'
     Guid            = '9fb0c9cf-ea85-4633-8915-c6d8a9379ab7'
     CompanyName     = 'Patrick Morris'
     Copyright       = '2025 Patrick Morris'
@@ -16,6 +16,17 @@
 # 📅 Changelog
 
 All notable changes to the **PoshPiHole** module will be documented in this file.
+
+---
+
+## [0.5.0] - 2025-05-28
+
+### Added
+
+* `Get-PiHoleList` – Retrieves the configured adlists from Pi-hole (`GET /lists`).
+* `Search-PiHoleDomain` – Search for domains in Pi-hole's lists (`GET /search/{domain}`).
+* `Get-PiHoleHost` – Retrieves host information from Pi-hole (`GET /info/host`).
+* `Get-PiHoleTeleporter` – Downloads a Pi-hole Teleporter backup as a .zip file (`GET /teleporter`).
 
 ---
 
@@ -82,6 +93,7 @@ All notable changes to the **PoshPiHole** module will be documented in this file
 ---
 
 > 📌 This changelog follows [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) principles.
+
 '@
         }
     }

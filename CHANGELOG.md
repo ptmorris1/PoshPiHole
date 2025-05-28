@@ -4,6 +4,17 @@ All notable changes to the **PoshPiHole** module will be documented in this file
 
 ---
 
+## [0.5.0] - 2025-05-28
+
+### Added
+
+* `Get-PiHoleList` – Retrieves the configured adlists from Pi-hole (`GET /lists`).
+* `Search-PiHoleDomain` – Search for domains in Pi-hole's lists (`GET /search/{domain}`).
+* `Get-PiHoleHost` – Retrieves host information from Pi-hole (`GET /info/host`).
+* `Get-PiHoleTeleporter` – Downloads a Pi-hole Teleporter backup as a .zip file (`GET /teleporter`).
+
+---
+
 ## [0.4.0] - 2025-05-23
 
 ### Added
